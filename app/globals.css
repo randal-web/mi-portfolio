@@ -1,26 +1,146 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ */
+/*  Design tokens                                                      */
+/*  Monochrome, high-contrast dark system inspired by the mockups.     */
+/* ------------------------------------------------------------------ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #050506;
+  --ink-2: #0a0a0c;
+  --surface: #0e0e11;
+  --surface-2: #16161a;
+  --fg: #f4f4f5;
+  --fg-muted: #a1a1aa;
+  --fg-subtle: #71717a;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+
+  --radius-card: 1.5rem;
+  --radius-frame: 2.5rem;
+
+  --animate-marquee: marquee 45s linear infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background-color: var(--ink);
+    color: var(--fg);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Sticky header clearance for in-page anchors. */
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+
+  ::selection {
+    background-color: var(--fg);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #26262b;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #3a3a42;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                          */
+/* ------------------------------------------------------------------ */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Faint grid used behind the hero. */
+@utility bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+/* Film grain overlay, keeps the flat blacks from banding. */
+@utility bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
+}
+
+/* ------------------------------------------------------------------ */
+/*  Motion                                                             */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
