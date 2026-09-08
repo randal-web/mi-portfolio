@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { Card } from "@/components/ui/Card";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section, SectionLabel } from "@/components/ui/Section";
@@ -67,8 +65,20 @@ export function About({
         </Reveal>
       </div>
 
-      <div className="mt-16 grid gap-10 lg:mt-24 lg:grid-cols-12 lg:gap-14">
-        <div className="lg:col-span-7">
+      {/*
+       * Same 4/8 split as the block above, so the section keeps one rhythm all
+       * the way down: a quiet caption in the left margin, content on the right.
+       * The mosaic stays in eight columns — at full width its offset cards
+       * stretch into bands and the zig-zag stops reading.
+       */}
+      <div className="mt-16 grid gap-8 md:grid-cols-12 md:gap-12 lg:mt-24">
+        <Reveal className="md:col-span-4">
+          <p className="max-w-xs text-sm leading-relaxed text-fg-subtle md:sticky md:top-28">
+            {dict.about.favTech}
+          </p>
+        </Reveal>
+
+        <div className="md:col-span-8">
           <ul className="flex flex-col gap-4 sm:gap-5">
             {skillGroups.map((group, position) => (
               <li
@@ -88,29 +98,7 @@ export function About({
               </li>
             ))}
           </ul>
-
-          <Reveal delay={120}>
-            <p className="mt-8 max-w-xs text-sm leading-relaxed text-fg-subtle">
-              {dict.about.favTech}
-            </p>
-          </Reveal>
         </div>
-
-        <Reveal delay={160} className="lg:col-span-5">
-          <div className="relative mx-auto aspect-[3/4] w-full max-w-sm overflow-hidden rounded-card border border-white/10 lg:sticky lg:top-28">
-            <Image
-              src={site.portrait}
-              alt={dict.about.portraitAlt}
-              fill
-              sizes="(min-width: 1024px) 28rem, (min-width: 640px) 24rem, 100vw"
-              className="object-cover grayscale transition-[filter] duration-700 hover:grayscale-0"
-            />
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent"
-            />
-          </div>
-        </Reveal>
       </div>
     </Section>
   );

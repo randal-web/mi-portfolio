@@ -47,7 +47,6 @@ export const es = {
     connector: "y soy",
     /** `{years}` se sustituye por los años calculados desde `content/experience.ts`. */
     experience: "Más de {years} años de experiencia.",
-    portraitAlt: "Retrato del desarrollador",
     favTech: "Algunas de mis tecnologías, temas o herramientas favoritas con las que he trabajado",
   },
 

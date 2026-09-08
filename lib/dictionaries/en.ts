@@ -39,7 +39,6 @@ export const en: Dictionary = {
     greeting: "Hello! I'm",
     connector: "and I'm a",
     experience: "More than {years} years of experience.",
-    portraitAlt: "Portrait of the developer",
     favTech: "Some of my favorite technologies, topics or tools that I worked with",
   },
 
