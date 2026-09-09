@@ -48,15 +48,35 @@ export function SocialRail({ className }: { className?: string }) {
       {site.socials.map(({ id, label, href }) => {
         const Icon = socialIcons[id];
         return (
-          <li key={id}>
+          <li key={id} className="relative">
             <a
               href={href}
               {...linkProps(href)}
               aria-label={label}
-              title={label}
-              className="block text-lg text-fg-subtle transition-colors duration-200 hover:text-fg"
+              className="group block text-lg text-fg-subtle transition-colors duration-200 hover:text-fg"
             >
               <Icon />
+
+              {/*
+               * The name slides out of the rail on hover. It replaces the
+               * native `title` tooltip, which lags half a second, cannot be
+               * styled to match the rail and never appears on keyboard focus —
+               * hence the `focus-visible` twin. `aria-hidden` keeps it out of
+               * the a11y tree, where `aria-label` already says the same word.
+               */}
+              <span
+                aria-hidden
+                className={cn(
+                  "pointer-events-none absolute left-full top-1/2 ml-4 -translate-y-1/2 whitespace-nowrap",
+                  "rounded-full border border-white/10 bg-ink/90 px-3 py-1.5",
+                  "font-mono text-xs text-fg backdrop-blur-md",
+                  "-translate-x-1 opacity-0 transition duration-200",
+                  "group-hover:translate-x-0 group-hover:opacity-100",
+                  "group-focus-visible:translate-x-0 group-focus-visible:opacity-100",
+                )}
+              >
+                {label}
+              </span>
             </a>
           </li>
         );

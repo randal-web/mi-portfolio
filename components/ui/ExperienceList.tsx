@@ -64,10 +64,16 @@ export function ExperienceList({ items, labels }: ExperienceListProps) {
              * interaction of the reference design — and stays inverted while it
              * is open. Children opt into the inverted palette through
              * `group-hover:` and `group-data-[open]:`.
+             *
+             * The corners round only while the slab is filled, so the row reads
+             * as a table rule at rest and as a card once it lifts. The rounding
+             * rides on the same transition as the colour, and the bottom rule
+             * disappears into the white slab anyway, so its curved ends never
+             * show.
              */}
             <div
               data-open={open ? "" : undefined}
-              className="group border-b border-white/10 transition-colors duration-300 hover:bg-fg data-[open]:bg-fg"
+              className="group border-b border-white/10 transition-[background-color,border-color,border-radius] duration-300 hover:rounded-2xl hover:bg-fg data-[open]:rounded-2xl data-[open]:bg-fg"
             >
               <button
                 type="button"

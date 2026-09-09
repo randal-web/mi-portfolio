@@ -112,18 +112,25 @@ export function SiteHeader({ name, locale, items, labels }: SiteHeaderProps) {
         </Link>
 
         <nav aria-label={labels.primary} className="hidden md:block">
-          <ul className="flex items-center gap-7 lg:gap-9">
+          {/*
+           * The padding lives on every item, not just the active one, so the
+           * pill appearing never shifts the row; the gaps shrink by the same
+           * amount the padding adds, keeping the original optical rhythm.
+           */}
+          <ul className="flex items-center gap-1 lg:gap-3">
             {items.map(({ id, label }) => (
               <li key={id}>
                 <a
                   href={`#${id}`}
                   aria-current={active === id ? "true" : undefined}
                   className={cn(
-                    "relative font-mono text-sm transition-colors duration-200",
-                    "after:absolute after:-bottom-1.5 after:left-0 after:h-px after:bg-fg after:transition-all after:duration-300",
+                    "relative block rounded-full px-3 py-1.5 font-mono text-sm transition-colors duration-200",
+                    // The hover underline is inset to the text, so it grows from
+                    // the left edge of the label rather than of the pill.
+                    "after:absolute after:bottom-0.5 after:left-3 after:right-3 after:h-px after:origin-left after:bg-fg after:transition-transform after:duration-300",
                     active === id
-                      ? "text-fg after:w-full"
-                      : "text-fg-muted after:w-0 hover:text-fg hover:after:w-full",
+                      ? "bg-white/10 text-fg after:scale-x-0"
+                      : "text-fg-muted after:scale-x-0 hover:text-fg hover:after:scale-x-100",
                   )}
                 >
                   {label}
