@@ -1,6 +1,7 @@
 import { ArrowRightIcon } from "@/components/icons";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { ResumeLink } from "@/components/ui/ResumeLink";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/Section";
 import { SocialPills } from "@/components/ui/SocialLinks";
@@ -44,6 +45,7 @@ function AvailabilityBadge({ label }: { label: string }) {
 
 export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const [lineOne, lineTwo] = pick(site.headline, locale);
+  const resume = site.resume && pick(site.resume, locale);
 
   return (
     <section
@@ -114,9 +116,19 @@ export function Hero({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 
         <Reveal delay={320} className="mt-14 sm:mt-20">
           <div className="flex flex-col items-start gap-6">
-            <AvailabilityBadge
-              label={site.available ? dict.hero.available : dict.hero.unavailable}
-            />
+            {/*
+             * The badge and the CV share a row: both are "who I am right now"
+             * facts, and pairing them keeps the download in the first screen
+             * without crowding the headline CTA.
+             */}
+            <div className="flex flex-wrap items-center gap-3">
+              <AvailabilityBadge
+                label={site.available ? dict.hero.available : dict.hero.unavailable}
+              />
+              {resume && (
+                <ResumeLink {...resume} label={dict.resume.download} size="sm" />
+              )}
+            </div>
             <nav aria-label={dict.hero.socials}>
               <SocialPills />
             </nav>

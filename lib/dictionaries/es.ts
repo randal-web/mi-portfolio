@@ -32,6 +32,13 @@ export const es = {
     label: "Idioma",
   },
 
+  resume: {
+    /** Botón completo: hero y menú móvil. */
+    download: "Descargar CV",
+    /** Etiqueta corta para el header, donde no cabe la frase entera. */
+    short: "CV",
+  },
+
   hero: {
     label: "... /Inicio ...",
     cta: "Proyectos",
@@ -102,6 +109,7 @@ export const es = {
     intro:
       "¿Tienes un proyecto en mente o una vacante que encaje? Cuéntamelo y te respondo en menos de 24 horas.",
     emailLabel: "E-mail",
+    resumeLabel: "CV",
     locationLabel: "Ubicación",
     availabilityLabel: "Disponibilidad",
     formTitle: "Formulario de contacto",

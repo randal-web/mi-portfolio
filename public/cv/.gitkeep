@@ -1,0 +1,6 @@
+Deja aquí los PDF del CV que apunta `content/site.ts` → `resume`:
+
+  randal-cv-es.pdf
+  randal-cv-en.pdf
+
+Si solo tienes uno, apunta ambos idiomas al mismo archivo en `content/site.ts`.

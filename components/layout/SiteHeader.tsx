@@ -6,6 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 import { CloseIcon, MenuIcon } from "@/components/icons";
 import { LocaleSwitcher } from "@/components/layout/LocaleSwitcher";
 import { Container } from "@/components/ui/Container";
+import { ResumeLink } from "@/components/ui/ResumeLink";
+import type { Resume } from "@/content/site";
 import type { Locale } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -15,15 +17,19 @@ type SiteHeaderProps = {
   name: string;
   locale: Locale;
   items: NavItem[];
+  /** Already resolved for `locale` by the layout; `null` hides the button. */
+  resume: Resume | null;
   labels: {
     primary: string;
     openMenu: string;
     closeMenu: string;
     locale: string;
+    resume: string;
+    resumeShort: string;
   };
 };
 
-export function SiteHeader({ name, locale, items, labels }: SiteHeaderProps) {
+export function SiteHeader({ name, locale, items, resume, labels }: SiteHeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string | null>(null);
@@ -141,6 +147,19 @@ export function SiteHeader({ name, locale, items, labels }: SiteHeaderProps) {
         </nav>
 
         <div className="flex items-center gap-4">
+          {/*
+           * Shortened to "CV" so the bar still fits the five nav items at
+           * `md`; below that the download moves into the mobile sheet.
+           */}
+          {resume && (
+            <ResumeLink
+              {...resume}
+              label={labels.resumeShort}
+              ariaLabel={labels.resume}
+              size="sm"
+              className="hidden md:inline-flex"
+            />
+          )}
           <LocaleSwitcher locale={locale} label={labels.locale} />
           <button
             type="button"
@@ -176,6 +195,18 @@ export function SiteHeader({ name, locale, items, labels }: SiteHeaderProps) {
             ))}
           </ul>
         </nav>
+
+        {resume && (
+          <div className="px-5 pb-6 pt-5 sm:px-8">
+            <ResumeLink
+              {...resume}
+              label={labels.resume}
+              onClick={close}
+              variant="solid"
+              className="w-full"
+            />
+          </div>
+        )}
       </div>
     </header>
   );

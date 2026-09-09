@@ -10,7 +10,7 @@ import { SideRails } from "@/components/layout/SideRails";
 import { articles } from "@/content/articles";
 import { site } from "@/content/site";
 import { getDictionary } from "@/lib/dictionaries";
-import { isLocale, localeTags, locales, type Locale } from "@/lib/i18n";
+import { isLocale, localeTags, locales, pick, type Locale } from "@/lib/i18n";
 import { getSiteUrl } from "@/lib/site-url";
 
 import "../globals.css";
@@ -106,6 +106,7 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
   const locale: Locale = lang;
   const dict = await getDictionary(locale);
   const items = navItems(dict);
+  const resume = site.resume && pick(site.resume, locale);
 
   return (
     /*
@@ -135,15 +136,23 @@ export default async function RootLayout({ children, params }: LayoutProps<"/[la
           name={site.name}
           locale={locale}
           items={items}
+          resume={resume}
           labels={{
             primary: dict.nav.primary,
             openMenu: dict.nav.openMenu,
             closeMenu: dict.nav.closeMenu,
             locale: dict.localeSwitcher.label,
+            resume: dict.resume.download,
+            resumeShort: dict.resume.short,
           }}
         />
 
-        <SideRails scrollLabel={dict.hero.scroll} socialsLabel={dict.hero.socials} />
+        <SideRails
+          scrollLabel={dict.hero.scroll}
+          socialsLabel={dict.hero.socials}
+          resume={resume}
+          resumeLabel={dict.resume.download}
+        />
 
         <main id="main">{children}</main>
 

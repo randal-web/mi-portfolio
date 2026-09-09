@@ -25,6 +25,11 @@ export const en: Dictionary = {
     label: "Language",
   },
 
+  resume: {
+    download: "Download CV",
+    short: "CV",
+  },
+
   hero: {
     label: "... /Home ...",
     cta: "Projects",
@@ -94,6 +99,7 @@ export const en: Dictionary = {
     intro:
       "Got a project in mind or a role that fits? Tell me about it and I'll get back to you within 24 hours.",
     emailLabel: "E-mail",
+    resumeLabel: "Resume",
     locationLabel: "Location",
     availabilityLabel: "Availability",
     formTitle: "Contact form",

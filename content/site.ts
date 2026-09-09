@@ -13,6 +13,25 @@ export type Social = {
   href: string;
 };
 
+export type Resume = {
+  /** Ruta del archivo dentro de `/public`. */
+  href: string;
+  /** Nombre con el que el navegador guarda la descarga. */
+  filename: string;
+};
+
+/**
+ * CV descargable, uno por idioma.
+ *
+ * Deja los archivos en `public/cv/` con estos nombres (o cambia las rutas).
+ * Si solo tienes un CV, apunta ambos idiomas al mismo archivo.
+ * Ponlo en `null` para ocultar el botón de descarga en todo el sitio.
+ */
+const resume: Localized<Resume> | null = {
+  es: { href: "/cv/randal-cv-es.pdf", filename: "Randal-CV-ES.pdf" },
+  en: { href: "/cv/randal-cv-en.pdf", filename: "Randal-CV-EN.pdf" },
+};
+
 export const site = {
   /** Se parte por espacios para el logo de dos líneas del header. */
   name: "Randal",
@@ -59,6 +78,9 @@ export const site = {
 
   /** Retrato de la sección «Sobre mí». Sustituye por tu foto en /public. */
   portrait: "/images/portrait.svg",
+
+  /** Ver el bloque `resume` de arriba. */
+  resume,
 
   /**
    * URL canónica en producción. Se usa para metadataBase, sitemap, OG y

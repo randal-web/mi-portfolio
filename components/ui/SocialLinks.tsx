@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { socialIcons } from "@/components/icons";
 import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
@@ -35,6 +37,34 @@ export function SocialPills({ className }: { className?: string }) {
   );
 }
 
+/**
+ * The name that slides out of the left rail on hover.
+ *
+ * It replaces the native `title` tooltip, which lags half a second, cannot be
+ * styled to match the rail and never appears on keyboard focus — hence the
+ * `focus-visible` twin. `aria-hidden` keeps it out of the a11y tree, where the
+ * trigger's `aria-label` already says the same word.
+ *
+ * Expects a `relative` ancestor carrying the `group` class.
+ */
+export function RailLabel({ children }: { children: ReactNode }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        "pointer-events-none absolute left-full top-1/2 ml-4 -translate-y-1/2 whitespace-nowrap",
+        "rounded-full border border-white/10 bg-ink/90 px-3 py-1.5",
+        "font-mono text-xs text-fg backdrop-blur-md",
+        "-translate-x-1 opacity-0 transition duration-200",
+        "group-hover:translate-x-0 group-hover:opacity-100",
+        "group-focus-visible:translate-x-0 group-focus-visible:opacity-100",
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
 /** Fixed vertical rail pinned to the left edge, as in the second mockup. */
 export function SocialRail({ className }: { className?: string }) {
   return (
@@ -57,26 +87,7 @@ export function SocialRail({ className }: { className?: string }) {
             >
               <Icon />
 
-              {/*
-               * The name slides out of the rail on hover. It replaces the
-               * native `title` tooltip, which lags half a second, cannot be
-               * styled to match the rail and never appears on keyboard focus —
-               * hence the `focus-visible` twin. `aria-hidden` keeps it out of
-               * the a11y tree, where `aria-label` already says the same word.
-               */}
-              <span
-                aria-hidden
-                className={cn(
-                  "pointer-events-none absolute left-full top-1/2 ml-4 -translate-y-1/2 whitespace-nowrap",
-                  "rounded-full border border-white/10 bg-ink/90 px-3 py-1.5",
-                  "font-mono text-xs text-fg backdrop-blur-md",
-                  "-translate-x-1 opacity-0 transition duration-200",
-                  "group-hover:translate-x-0 group-hover:opacity-100",
-                  "group-focus-visible:translate-x-0 group-focus-visible:opacity-100",
-                )}
-              >
-                {label}
-              </span>
+              <RailLabel>{label}</RailLabel>
             </a>
           </li>
         );

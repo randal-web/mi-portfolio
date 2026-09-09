@@ -1,4 +1,6 @@
+import { ResumeRailLink } from "@/components/ui/ResumeLink";
 import { SocialRail } from "@/components/ui/SocialLinks";
+import type { Resume } from "@/content/site";
 
 /**
  * The fixed left/right furniture from the second mockup: a vertical social
@@ -10,15 +12,28 @@ import { SocialRail } from "@/components/ui/SocialLinks";
 export function SideRails({
   scrollLabel,
   socialsLabel,
+  resume,
+  resumeLabel,
 }: {
   scrollLabel: string;
   socialsLabel: string;
+  /** Already resolved for the active locale; `null` hides the button. */
+  resume: Resume | null;
+  resumeLabel: string;
 }) {
   return (
     <div className="pointer-events-none fixed inset-y-0 z-40 hidden w-full xl:block">
-      <nav aria-label={socialsLabel} className="absolute left-4 top-1/2 -translate-y-1/2">
-        <SocialRail />
-      </nav>
+      {/*
+       * The CV sits in its own capsule below the socials rather than inside
+       * the list: it is a download, not a profile, so it stays outside the
+       * `<nav>` landmark that the socials own.
+       */}
+      <div className="absolute left-4 top-1/2 flex -translate-y-1/2 flex-col items-center gap-3">
+        <nav aria-label={socialsLabel}>
+          <SocialRail />
+        </nav>
+        {resume && <ResumeRailLink {...resume} label={resumeLabel} />}
+      </div>
 
       <div
         aria-hidden

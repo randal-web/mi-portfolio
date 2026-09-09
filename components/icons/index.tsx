@@ -111,6 +111,16 @@ export function ArrowUpIcon(props: IconProps) {
   );
 }
 
+/** Tray with an arrow dropping into it — the CV download button. */
+export function DownloadIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 3.5v11m0 0 4-4m-4 4-4-4" {...stroke} />
+      <path d="M4 16.5v2A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5v-2" {...stroke} />
+    </svg>
+  );
+}
+
 export function MenuIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>

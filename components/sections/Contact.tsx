@@ -1,5 +1,5 @@
 import { ContactForm } from "@/components/contact/ContactForm";
-import { MailIcon } from "@/components/icons";
+import { DownloadIcon, MailIcon } from "@/components/icons";
 import { Reveal } from "@/components/ui/Reveal";
 import { DisplayHeading, Section, SectionLabel } from "@/components/ui/Section";
 import { SocialPills } from "@/components/ui/SocialLinks";
@@ -25,6 +25,8 @@ export function Contact({
   locale: Locale;
   index: number;
 }) {
+  const resume = site.resume && pick(site.resume, locale);
+
   return (
     <Section id="contact" index={index}>
       <div className="flex flex-col gap-6">
@@ -55,6 +57,18 @@ export function Contact({
                   {site.email}
                 </a>
               </InfoRow>
+              {resume && (
+                <InfoRow label={dict.contact.resumeLabel}>
+                  <a
+                    href={resume.href}
+                    download={resume.filename}
+                    className="group inline-flex items-center gap-2.5 underline-offset-4 transition-opacity hover:opacity-70 hover:underline"
+                  >
+                    <DownloadIcon className="text-fg-subtle transition-transform duration-200 group-hover:translate-y-0.5" />
+                    {dict.resume.download}
+                  </a>
+                </InfoRow>
+              )}
               <InfoRow label={dict.contact.locationLabel}>{pick(site.location, locale)}</InfoRow>
               <InfoRow label={dict.contact.availabilityLabel}>
                 {site.available ? dict.hero.available : dict.hero.unavailable}
